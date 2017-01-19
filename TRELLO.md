@@ -2,11 +2,11 @@
 
 ### [1] Get ready for ChatOps:  Join Slack and Trello ###
 1. [Slack](https://www.slack.com) is software used for communicating within teams.  In this event we will use it for Q/A as well as updates from other tooling. Please create an account and sign in at [NetApp Hackathon](https://netapp-hackathon.slack.com/).  If you use your @netapp.com email address you will automatically be approved for access.  Once you have joined post a welcome message announcing yourself on the #general channel!  There are a few other channels that the bots will post to:
- - #workflow: Trello sourced task completion updates
- - #build: Jenkins sourced job updates
- - #git: Git sourced source code and issue updates
-1. Send the leader a private message on Slack asking for credentials for this event.  Please only ask once for each team as a container host will be allocated to your team in the response.
+- \#workflow: Trello sourced task completion updates
+- \#build: Jenkins sourced job updates
+- \#git: Git sourced source code and issue updates
 
+1. Send the leader a private message on Slack asking for credentials for this event.  Please only ask once for each team as a container host will be allocated to your team in the response.
 1. [Trello](https://www.trello.com) is visual workflow software where you can make tasks, assign them to teammates, and easily track progress. The instructions for the event are in Trello.  A sign-up link will be provided on Slack.  Sign up and then click create a list for your team by copying from the 'Template' list:
  - Click the 'Template' list settings (...), select 'Copy List', and enter your names.
 1. Start working off your own list on each card and each task in Trello.  Be sure to check things off in the checklist as you complete them!
@@ -79,9 +79,7 @@ Now that you have the application running we want to enable continuous integrati
  - **Pipeline**
  - **GitHub Plugin**
  - *Choose to download now and activate after next boot.  Then on the install status screen check the Restart Jenkins checkbox.*
-1. Configure the Slack plugin:
- - Install plugin: **Manage Jenkins** -> **Manage Plugins** and install **Slack Notification Plugin**.  No restart of Jenkins is necessary.
- - Configure the plugin: **Manage Jenkins** -> **Configure System** and fill in the **Global Slack Notifier Settings** using details provided by the event leaders.  Click the **Test Connection** button and verify a test message is posted to Slack #build channel.
+1. Configure the Slack plugin: **Manage Jenkins** -> **Configure System** and fill in the **Global Slack Notifier Settings** using details provided by the event leaders.  Click the **Test Connection** button and verify a test message is posted to Slack #build channel.
 
 ### [5] Configure jobs in Jenkins ###
 
@@ -100,7 +98,7 @@ Jenkins is very flexible supporting numerous job types.  We will explore freesty
 
 1. It's time to test our CI/CD.  Choose **Build Now**.  
  - Monitor the stages in Jenkins.  Monitor Slack for posts.
- - When approval is requested if you want to push to production check the test instance.  If it looks good, push to production, otherwise don't!  If you're ready for a code change ask the leader to push something new for you!
+ - When approval is requested if you want to push to production check the test instance.  If it looks good, push to production, otherwise don't!  Monitor the \#git channel for code updates, if you're eager for a change ask the leader to push something!
 
 ### The end ###
 

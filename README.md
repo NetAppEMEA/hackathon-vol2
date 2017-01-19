@@ -3,10 +3,11 @@ Work in an Agile way and build a Continuous Integration / Continuous Deployment 
 
 ![Diagram of Goal](https://cloud.githubusercontent.com/assets/917241/22088722/60f5e71a-dde6-11e6-8307-0160f2cc6ca8.png)
 
-To start out everyone will get on Slack and Trello so we can work using a ChatOps model popular in DevOps shops.  Slack is a communications platform (chat on steroids) and Trello helps with task management which will help you keep your actions and status in check.  You will do most work on your own container host running CoreOS, an OS optimized for containers which includes Docker pre-installed.  From that host you will install and configure the NetApp Docker Volume Plugin and provision some NetApp SolidFire storage.  Then you will deploy a web application and database and test it works properly.  Next you will setup Jenkins, including integration with Slack, so that you can quickly test and deploy new releases of the app that will be rolled out during the event.  **Lets get to it!**
+We will use Slack and Trello to work using a ChatOps model popular in DevOps shops.  Slack is a communications platform (chat on steroids) and Trello helps with task management which will help you keep your actions and status in check.  You will do most work on your own container host running CoreOS, an OS optimized for containers which includes Docker pre-installed.  From that host you will install and configure the NetApp Docker Volume Plugin and provision some NetApp SolidFire storage.  Then you will deploy a web application and database and test it works properly.  Next you will setup Jenkins, including integration with Slack, so that you can quickly test and deploy new releases of the app that will be rolled out during the event.  **Lets get to it!**
 
 Technologies used:
 
+- Trello and Slack for ChatOps
 - Docker as the container engine
 - Jenkins as the CI/CD engine
 - SolidFire with the NetApp Docker Volume Plugin for persistent storage
@@ -23,10 +24,13 @@ Technologies used:
 
 ### [1] Get ready for ChatOps:  Join Slack and Trello ###
 1. [Slack](https://www.slack.com) is software used for communicating within teams.  In this event we will use it for Q/A as well as updates from other tooling. Please create an account and sign in at [NetApp Hackathon](https://netapp-hackathon.slack.com/).  Users with a @netapp.com email address will automatically be approved for access.  If you don't have a @netapp.com email address contact the leader to get an invite.  Once you have joined post a welcome message announcing yourself on the #general channel!  There are a few other channels that the bots will post to:
- - #workflow: Trello sourced task completion updates
- - #build: Jenkins sourced job updates
- - #git: Git sourced source code and issue updates
-1. Send the leader a private message on Slack asking for credentials for this event.  Please only ask once for each team as a container host will be allocated to your team in the response.  Only if you will not use Trello can you click [here](TRELLO.md) to find instructions for the event, otherwise use those in Trello.
+- /#workflow: Trello sourced task completion updates
+- /#build: Jenkins sourced job updates
+- /#git: Git sourced source code and issue updates
+ 1. Send the leader a private message on Slack asking for credentials for this event.  Please only ask once for each team as a container host will be allocated to your team in the response.  Only if you will not use Trello can you click [here](TRELLO.md) to find instructions for the event, otherwise use those in Trello.
+1. [Trello](https://www.trello.com) is visual workflow software where you can make tasks, assign them to teammates, and easily track progress. The instructions for the event are in Trello.  A sign-up link will be provided on Slack.  Sign up and then click create a list for your team by copying from the 'Template' list:
+ - Click the 'Template' list settings (...), select 'Copy List', and enter your names.
+1. Start working off your own list on each card and each task in Trello.  Be sure to check things off in the checklist as you complete them!
 
 ## Acknowledgements ##
 
