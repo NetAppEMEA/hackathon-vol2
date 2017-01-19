@@ -32,7 +32,7 @@ Persistent storage is provided by NetApp SolidFire storage and managed using the
 ### [3] Install Web Application Manually ###
 Before you can automate something you have to know the steps to do it by hand.  In this stage you will download the web application, create production storage for it, run the db, and then build and run the webapp.
 
-1. Use `git` to clone the [hackathon-vol2](https://git.corp.netapp.com/madden/hackathon-vol2) repo to your container host.  
+1. Use `git` to clone the [hackathon-vol2](https://github.com/NetAppEMEA/hackathon-vol2) repo to your container host.  
 1. Create persistent storage for your db:
  - Make the size 50GB.
  - Name the volume `vol-redis` because later automation will require this name.
