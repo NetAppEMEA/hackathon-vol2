@@ -1,7 +1,7 @@
 # Goal #
 Work in an Agile way and build a Continuous Integration / Continuous Deployment (CI/CD) pipeline to build, test, and deploy a containerized stateful web application:
 
-![Diagram of Goal](https://git.corp.netapp.com/madden/hackathon-vol2/uploads/07c5312a6b80dacf063bcea6954a488e/hack-vol2.png)
+![Diagram of Goal](https://cloud.githubusercontent.com/assets/917241/22088722/60f5e71a-dde6-11e6-8307-0160f2cc6ca8.png)
 
 To start out everyone will get on Slack and Trello so we can work using a ChatOps model popular in DevOps shops.  Slack is a communications platform (chat on steroids) and Trello helps with task management which will help you keep your actions and status in check.  You will do most work on your own container host running CoreOS, an OS optimized for containers which includes Docker pre-installed.  From that host you will install and configure the NetApp Docker Volume Plugin and provision some NetApp SolidFire storage.  Then you will deploy a web application and database and test it works properly.  Next you will setup Jenkins, including integration with Slack, so that you can quickly test and deploy new releases of the app that will be rolled out during the event.  **Lets get to it!**
 
