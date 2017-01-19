@@ -24,10 +24,10 @@ Technologies used:
 
 ### [1] Get ready for ChatOps:  Join Slack and Trello ###
 1. [Slack](https://www.slack.com) is software used for communicating within teams.  In this event we will use it for Q/A as well as updates from other tooling. Please create an account and sign in at [NetApp Hackathon](https://netapp-hackathon.slack.com/).  Users with a @netapp.com email address will automatically be approved for access.  If you don't have a @netapp.com email address contact the leader to get an invite.  Once you have joined post a welcome message announcing yourself on the #general channel!  There are a few other channels that the bots will post to:
-- /#workflow: Trello sourced task completion updates
-- /#build: Jenkins sourced job updates
-- /#git: Git sourced source code and issue updates
- 1. Send the leader a private message on Slack asking for credentials for this event.  Please only ask once for each team as a container host will be allocated to your team in the response.  Only if you will not use Trello can you click [here](TRELLO.md) to find instructions for the event, otherwise use those in Trello.
+ - \#workflow: Trello sourced task completion updates
+ - \#build: Jenkins sourced job updates
+ - \#git: Git sourced source code and issue updates
+1. Send the leader a private message on Slack asking for credentials for this event.  Please only ask once for each team as a container host will be allocated to your team in the response.  Only if you will not use Trello can you click [here](TRELLO.md) to find instructions for the event, otherwise use those in Trello.
 1. [Trello](https://www.trello.com) is visual workflow software where you can make tasks, assign them to teammates, and easily track progress. The instructions for the event are in Trello.  A sign-up link will be provided on Slack.  Sign up and then click create a list for your team by copying from the 'Template' list:
  - Click the 'Template' list settings (...), select 'Copy List', and enter your names.
 1. Start working off your own list on each card and each task in Trello.  Be sure to check things off in the checklist as you complete them!
