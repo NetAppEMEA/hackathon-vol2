@@ -16,8 +16,8 @@ Persistent storage is provided by NetApp SolidFire storage and managed using the
 
 1. The installation instructions for nDVP are at [NetApp Github](https://github.com/NetApp/netappdvp).  Use them to install and configure the software on your container host.  Some notes:
  - Use v1.3 and NOT v1.3.2 which has a cloning bug with SolidFire that will cause issues for us!
- - On CoreOS the `/usr` filesystem is readonly so put it elsewhere, such as in `/opt`.
-2. Configure and start the nDVP with the NetApp SolidFire backend.  Notes to help:
+ - On CoreOS the `/usr` filesystem is readonly so put it elsewhere, such as in `/opt`.  More details for CoreOS are in the [Quick Start: SolidFire and the NetApp Docker Volume Plugin (nDVP)](http://www.beginswithdata.com/2017/01/20/quickstart-solidfire-ndvp/)
+ 2. Configure and start the nDVP with the NetApp SolidFire backend.  Notes to help:
  - SolidFire details have been provided in a separate email
  - Configure the `TenantName` with a value of your container hostname
  - On CoreOS when you start the nDVP use must pass the port like `--port=27609`
