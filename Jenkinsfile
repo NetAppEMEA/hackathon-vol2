@@ -31,6 +31,9 @@ node {
       sh "sudo docker port webapp-${env.BUILD_NUMBER} 80 | cut -d\':\' -f2 > user.out"
       TEST_PORT = readFile('user.out').trim()
 
+      // give the container 5 seconds to initialize the web server
+	  sh "sleep 5"
+
       // connect to the webapp and verify it listens and is connected to the db
       //
       // to get IP of jenkins host (which must be the same container host where dev instance runs)
