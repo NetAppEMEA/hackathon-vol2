@@ -15,8 +15,8 @@ node {
     }
 
     stage ("Create Test instance"){
-      // clone the docker volume for test purposes with restricted IOPs
-      sh "sudo docker volume create -d netapp -o from=vol-redis -o qos=50,150,300 --name vol-redis-${env.BUILD_NUMBER} "
+      // clone the docker volume for test purposes
+      sh "sudo docker volume create -d netapp -o from=vol-redis --name vol-redis-${env.BUILD_NUMBER} "
 
       // start the redis with the cloned storage
 	    sh "sudo docker run -d --name redis-${env.BUILD_NUMBER} -v vol-redis-${env.BUILD_NUMBER}:/data redis:3.2.6-alpine redis-server --appendonly yes"
