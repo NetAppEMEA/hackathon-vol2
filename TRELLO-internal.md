@@ -1,63 +1,24 @@
 ***This page contains instructions that have been loaded into Trello.  So either use Trello, or these, but there is no sense in using both!***
 
 ### [1] Get ready for ChatOps:  Join Slack and Trello ###
-Get connected to our ChatOps tooling; Slack and Trello:
-
-1. Get on our Slack. Create an account and sign in at [NetApp Hackathon](https://netapp-hackathon.slack.com/). Users with a `@netapp.com` email address will automatically be granted access.  Non-NetApp users should give their email address to the leader and request an invitation.
-1. Once in Slack have a look around and notice there are several channels that the bots will post to:
- - \#workflow: Trello sourced task completion updates
- - \#build: Jenkins sourced job updates
- - \#git: Git sourced source code and issue updates
-1. Look for a pinned post on the #general channel to find some private info needed for the event.
-1. Get on our Trello board using the invite link in the pinned post on Slack.  Find the list matching your team number, here you will find all steps for the event.  Open the first card and check off the tasks that you have already completed and then continue with the rest.
-
-### [2] Complete initial setup of the SolidFire Cluster and Prepare the Container Host###
-Because we are leveraging an existing NetApp lab we need to complete the installation of the SolidFire cluster and prepare the container host building the foundation for our hack.
-
-1. Open the lab guide and complete section 3.1 to complete the initial setup of the SolidFire cluster.  
- - Lab credentials are username: `admin`, password: `Netapp1!`
- - **TL;DR**  (1) Add the node using the 'Pending Nodes' hyperlink from reporting page.  (2) Add the drives using the 'Available Drives' hyperlink from the reporting page.
-1. Login the CentOS host using putty
- - Lab credentials are username: `root`, password: `Netapp1!`
-1. Set SElinux in permissive mode so Docker socket can be accessed by Jenkins:
-    ```
-    [root@centos72 ~]# setenforce permissive
-    ```
-
-1. Remove the default firewall blocking rule.  First, find rule in "Chain INPUT" that has REJECT all in it.  Next delete this one by num.
-    ```
-    [root@centos72 ~]# iptables -L INPUT --line
-    Chain INPUT (policy ACCEPT)
-    num  target     prot opt source               destination
-    1    ACCEPT     all  --  anywhere             anywhere             ctstate RELATED,ESTABLISHED
-    2    ACCEPT     all  --  anywhere             anywhere
-    3    INPUT_direct  all  --  anywhere             anywhere
-    4    INPUT_ZONES_SOURCE  all  --  anywhere             anywhere
-    5    INPUT_ZONES  all  --  anywhere             anywhere
-    6    ACCEPT     icmp --  anywhere             anywhere
-    7    REJECT     all  --  anywhere             anywhere             reject-with icmp-host-prohibited
-
-    # iptables -D INPUT 7
-    ```
-
-1. Install Docker engine and start it
-```
-[root@centos72 ~]# curl -fsSL https://get.docker.com/ | sh
-[root@centos72 ~]# systemctl start docker
-```
-
-1. Run a Docker container to verify your install is sane:
- - A basic one is `docker run --rm hello-world`
- - A fancy one is `docker run --rm -it egray/cmatrix`
+ 1. Get on our Slack. Create an account and sign in at [NetApp Hackathon](https://netapp-hackathon.slack.com/). Users with a `@netapp.com` email address will automatically be approved for access.  If you don't have a `@netapp.com` email address contact the leader to get an invite.
+ 1. Once in Slack have a look around and notice there are several channels that the bots will post to:
+  - \#workflow: Trello sourced task completion updates
+  - \#build: Jenkins sourced job updates
+  - \#git: Git sourced source code and issue updates
+ 1. Look for a pinned post on the #general channel to find credentials and other info needed for the event.  The leader will assign each team a number giving you your own lab container host.
+ 1. Get on Trello.  In the pinned post is an invite link to join the hackathon-vol2 board.  Join it and find the list matching your team number.  Open the first card and check off the tasks that you have already completed and then continue with the next task to work through the event!
 
 ### [2] Setup nDVP ###
 Persistent storage is provided by NetApp SolidFire storage and managed using the NetApp Docker Volume Plugin (nDVP).  Install and setup the plugin, then verify you can provision, use, and deprovision storage directly from Docker.
 
-The nDVP lives at [NetApp Github](https://github.com/NetApp/netappdvp). The documentation is a work in progress and is at times confusing or out of date.   For this reason I suggest you use the blog post [Using the NetApp Docker Volume Plugin with SolidFire storage](http://www.beginswithdata.com/2017/02/06/ndvp-usage-solidfire-san/) as a reference to install, configure, and use the nDVP with SolidFire storage.
+The nDVP lives at [NetApp Github](https://github.com/NetApp/netappdvp). The documentation is a work in progress and is at times confusing or out of date.  Also, we are using CoreOS for our container host slightly different installation steps are required.  For this reason I suggest you use the blog post [Using the NetApp Docker Volume Plugin with SolidFire storage](http://www.beginswithdata.com/2017/02/06/ndvp-usage-solidfire-san/) as a reference to install, configure, and use the nDVP with SolidFire storage.
 
-1. Install and configure the nDVP software on your container host.  Not sure where to start?  Check the blog just mentioned!
+1. Install and configure the nDVP software on your container host.  Attention:
+ - SolidFire connection details are in the Slack pinned post found on the #general channel
+ - Configure the `TenantName` to be your container hostname (shortname as shown on the SSH prompt)
 
-2. Create, mount, test, unmount, destroy some storage. Notes to help:
+3. Create, mount, test, unmount, destroy some storage. Notes to help:
  - Use the blog post mentioned earlier for tips!
  - Create a volume.  Next start a container and attach your volume using something like `docker run -it --rm -v vol1:/vol1 alpine ash`. Use `df` to check if the volume is mounted through to the container.  Do some IO and verify from the SolidFire GUI that you see IO to the volume.
  - Explore and try other syntax options to create, clone, mount, and remove persistent storage.  Use the SolidFire GUI and reporting event log to follow along.
@@ -103,11 +64,11 @@ Now that you have the application running we want to enable continuous integrati
 1. Run the container.  The Jenkins container will use its Docker CLI but manage the Docker engine on the container host.  For this to happen we pass through the management socket from the Docker host into the Jenkins container.  
  - Start Jenkins:
  ```
- docker run -d --name jenkins -p 8080:8080 -p 50000:50000 \
- -v vol-jenkins:/var/jenkins_home \
- -v /var/run/docker.sock:/var/run/docker.sock \
- -e DOCKER_HOST_IP=`ip -4 addr show ens160 | \
- grep -Po 'inet \K[\d.]+'` hack/jenkins
+  docker run -d --name jenkins -p 8080:8080 -p 50000:50000 \
+  -v vol-jenkins:/var/jenkins_home \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -e DOCKER_HOST_IP=`ip -4 addr show eth0 | \
+  grep -Po 'inet \K[\d.]+'` hack/jenkins
  ```
 1. Load the web interface and after logging in choose **Select Plugins to Install**.  Select None and continue.  Update the `admin` user with the password `hack@thepub` and fill in your own name and email address.  It should complete the initial setup and then show you the main dashboard.
 1. Add the following plugins by navigating **Manage Jenkins** -> **Manage Plugins**:
@@ -115,7 +76,7 @@ Now that you have the application running we want to enable continuous integrati
  - **Slack Notification Plugin**
  - **Pipeline**
  - **GitHub Plugin**
- - *Choose to download now and activate after restart.  Then on the install status screen check the Restart Jenkins checkbox.*
+ - *Choose to download now and activate after next boot.  Then on the install status screen check the Restart Jenkins checkbox.*
 1. Configure the Slack plugin: **Manage Jenkins** -> **Configure System** and fill in the **Global Slack Notifier Settings** using details provided in the pinned Slack post.  Click the **Test Connection** button and verify a test message is posted to Slack #build channel.
 
 ### [5] Configure jobs in Jenkins ###
@@ -152,4 +113,3 @@ Some ideas:
 - Create a job that would create a QA instance, and another that would destroy it
 - Create another web application using persistent storage with some other database type
 - Create a simple apache webserver with your own webpage on persistent storage.  Change it to nginx webserver with the same persistent storage.
-- Check out the SolidFire 101 lab guide and do some other stuff with the lab while you have it!
