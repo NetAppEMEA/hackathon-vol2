@@ -50,7 +50,7 @@ Because we are leveraging an existing NetApp lab we need to complete the install
  - A basic one is `docker run --rm hello-world`
  - A fancy one is `docker run --rm -it egray/cmatrix`
 
-### [2] Setup nDVP ###
+### [3] Setup nDVP ###
 Persistent storage is provided by NetApp SolidFire storage and managed using the NetApp Docker Volume Plugin (nDVP).  Install and setup the plugin, then verify you can provision, use, and deprovision storage directly from Docker.
 
 The nDVP lives at [NetApp Github](https://github.com/NetApp/netappdvp). The documentation is a work in progress and is at times confusing or out of date.   For this reason I suggest you use the blog post [Using the NetApp Docker Volume Plugin with SolidFire storage](http://www.beginswithdata.com/2017/02/06/ndvp-usage-solidfire-san/) as a reference to install, configure, and use the nDVP with SolidFire storage.
@@ -62,7 +62,7 @@ The nDVP lives at [NetApp Github](https://github.com/NetApp/netappdvp). The docu
  - Create a volume.  Next start a container and attach your volume using something like `docker run -it --rm -v vol1:/vol1 alpine ash`. Use `df` to check if the volume is mounted through to the container.  Do some IO and verify from the SolidFire GUI that you see IO to the volume.
  - Explore and try other syntax options to create, clone, mount, and remove persistent storage.  Use the SolidFire GUI and reporting event log to follow along.
 
-### [3] Install Web Application Manually ###
+### [4] Install Web Application Manually ###
 Before you can automate something you have to know the steps to do it by hand.  In this stage you will download the web application, create production storage for it, run the db, and then build and run the webapp.
 
 1. Use `git` to clone the [hackathon-vol2](https://github.com/NetAppEMEA/hackathon-vol2) repo to your container host.  
@@ -93,7 +93,7 @@ Before you can automate something you have to know the steps to do it by hand.  
  - Refresh your web browser and verify it is reset.  
  - Create a more artistic design that you will recognize later during other testing
 
-### [4] Initial setup Jenkins ###
+### [5] Initial setup Jenkins ###
 Now that you have the application running we want to enable continuous integration / continuous deployment of it using Jenkins.  First we need to setup Jenkins...in a container of course!
 
 1. Install Jenkins.  The Jenkins container in the Docker hub does not include Docker CLI which we need for management so we will extend the official one.
@@ -118,7 +118,7 @@ Now that you have the application running we want to enable continuous integrati
  - *Choose to download now and activate after restart.  Then on the install status screen check the Restart Jenkins checkbox.*
 1. Configure the Slack plugin: **Manage Jenkins** -> **Configure System** and fill in the **Global Slack Notifier Settings** using details provided in the pinned Slack post.  Click the **Test Connection** button and verify a test message is posted to Slack #build channel.
 
-### [5] Configure jobs in Jenkins ###
+### [6] Configure jobs in Jenkins ###
 
 Jenkins is very flexible supporting numerous job types.  We will explore freestyle jobs (more simplistic) and pipeline jobs (more advanced).
 
@@ -141,7 +141,7 @@ Jenkins is very flexible supporting numerous job types.  We will explore freesty
  - When approval is requested check the console log for a URL for the staging instance.  Check it and if you like the change, push to production, otherwise don't!
  - Monitor the \#git channel for code updates.  If code is checked in see what changed and trigger a build.  If you're eager for a change ask the leader to push something!
 
-### The end ###
+### Celebrate! ###
 
 If you got here you have successfully setup worked in an Agile way to setup a Continuous Integration / Continuous Deployment (CI/CD) pipeline to build, test, and deploy a containerized stateful web application using NetApp SolidFire storage!  Pat yourself on the back and post an emoji or two to Slack to celebrate your triumph!
 
