@@ -5,10 +5,9 @@ Get connected to our ChatOps tooling; Slack and Trello:
 
 1. Get on our Slack. Create an account and sign in at [NetApp Hackathon](https://netapp-hackathon.slack.com/). Users with a `@netapp.com` email address will automatically be granted access.  Non-NetApp users should give their email address to the leader and request an invitation.
 1. Once in Slack have a look around and notice there are several channels that the bots will post to:
- - \#workflow: Trello sourced task completion updates
- - \#build: Jenkins sourced job updates
- - \#git: Git sourced source code and issue updates
-
+    - \#workflow: Trello sourced task completion updates
+    - \#build: Jenkins sourced job updates
+    - \#git: Git sourced source code and issue updates
 1. Look for a pinned post on the #general channel to find some private info needed for the event.
 1. Get on our Trello board using the invite link in the pinned post on Slack.  Find the list matching your team number, here you will find all steps for the event.  Open the first card and check off the tasks that you have already completed and then continue with the rest.
 
