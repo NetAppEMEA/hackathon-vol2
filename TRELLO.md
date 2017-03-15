@@ -14,10 +14,6 @@ Get connected to our ChatOps tooling; Slack and Trello:
 ### [2] Complete initial setup of the SolidFire Cluster and Prepare the Container Host###
 Because we are leveraging an existing NetApp lab we need to complete the installation of the SolidFire cluster and prepare the container host building the foundation for our hack.
 
-1. Open the lab guide and complete section 3.1 to complete the initial setup of the SolidFire cluster.  
-    - Lab credentials are username: `admin`, password: `Netapp1!`
-    - **TL;DR**  (1) Add the node using the 'Pending Nodes' hyperlink from reporting page.  (2) Add the drives using the 'Available Drives' hyperlink from the reporting page.
-
 1. Login the CentOS host using putty
     - Lab credentials are username: `root`, password: `Netapp1!`
 1. Set SElinux in permissive mode so Docker socket can be accessed by Jenkins:
@@ -46,6 +42,20 @@ Because we are leveraging an existing NetApp lab we need to complete the install
     [root@centos72 ~]# curl -fsSL https://get.docker.com/ | sh
     [root@centos72 ~]# systemctl start docker
     ```
+
+1. There are some steps needed to complete initialization of the SolidFire cluster. Open the Web GUI.
+    - Lab credentials are username: `admin`, password: `Netapp1!`
+    - One node + drives needs to be added to the cluster using one of these techniques:
+        - GUI: (1) Add the node using the 'Pending Nodes' hyperlink from reporting page.  (2) Add the drives using the 'Available Drives' hyperlink from the reporting page.
+        - PowerShell on Docker:
+        ```
+        # docker run -it --rm netapp/solidfire-powershell:latest
+
+        Connect-SFCluster 192.168.0.101 -Username admin -Password Netapp1!
+        Get-SFPendingNode | Add-SFNode
+        Get-SFDrive | Where-Object {$_.status -eq "available"} | Add-SFDrive
+        Disconnect-SFCluster 192.168.0.101
+        ```
 
 1. Run a Docker container to verify your install is sane:
     - A basic one is `docker run --rm hello-world`
