@@ -8,6 +8,7 @@ Get connected to our ChatOps tooling; Slack and Trello:
  - \#workflow: Trello sourced task completion updates
  - \#build: Jenkins sourced job updates
  - \#git: Git sourced source code and issue updates
+
 1. Look for a pinned post on the #general channel to find some private info needed for the event.
 1. Get on our Trello board using the invite link in the pinned post on Slack.  Find the list matching your team number, here you will find all steps for the event.  Open the first card and check off the tasks that you have already completed and then continue with the rest.
 
@@ -17,6 +18,7 @@ Because we are leveraging an existing NetApp lab we need to complete the install
 1. Open the lab guide and complete section 3.1 to complete the initial setup of the SolidFire cluster.  
  - Lab credentials are username: `admin`, password: `Netapp1!`
  - **TL;DR**  (1) Add the node using the 'Pending Nodes' hyperlink from reporting page.  (2) Add the drives using the 'Available Drives' hyperlink from the reporting page.
+
 1. Login the CentOS host using putty
  - Lab credentials are username: `root`, password: `Netapp1!`
 1. Set SElinux in permissive mode so Docker socket can be accessed by Jenkins:
@@ -41,10 +43,10 @@ Because we are leveraging an existing NetApp lab we need to complete the install
     ```
 
 1. Install Docker engine and start it
-```
-[root@centos72 ~]# curl -fsSL https://get.docker.com/ | sh
-[root@centos72 ~]# systemctl start docker
-```
+    ```
+    [root@centos72 ~]# curl -fsSL https://get.docker.com/ | sh
+    [root@centos72 ~]# systemctl start docker
+    ```
 
 1. Run a Docker container to verify your install is sane:
  - A basic one is `docker run --rm hello-world`
@@ -72,21 +74,26 @@ Before you can automate something you have to know the steps to do it by hand.  
  - Set the QoS limits to Min:500, Max:1500, Burst: 3000.
  - Check the volume from a Docker perspective using `inspect`.
  - Check the SolidFire GUI and verify the config (size and qos) is correct.
+
 1. Run the database container.  The container must be named `redis` as the webapp will connect to this hostname:
  - `docker run --name redis -d  -v vol-redis:/data redis:3.2.6-alpine redis-server --appendonly yes`
  - Check if it is running using `docker ps`.  Are any network ports exported?
  - Which container filesystem path is the `vol-redis` volume mapped to?  How do you know this is the correct location? Hint: Check [Docker Hub](https://hub.docker.com/_/redis/) for more details on this image.
+
 1. The webapp is our own code so we need to build a container image.  The code you cloned earlier includes a Dockerfile.  Use this syntax:
  - `docker build -t webapp:latest .`
  - How many MBs is the image?  What flavor of linux does it use?
+
 1. Run a webapp container from this image. Name the container `webapp` because later automation will require this name.  Use this syntax:
  - `docker run --name webapp -d -p 80:80 --link redis  webapp:latest --redis_port=6379 --redis_host=redis`
  - Are any network ports exported?
  - Why is `--link redis` needed?
+
 1. From your web browser load the webapp and click around a bit. Then use `inspect` in your web browser (right click on the page and choose `inspect`) and click the Network tab
  - What traffic do you see? What data is being sent and what is the response?  
  - Stop the redis database container.  What do you see in `inspect`?  Start the redis container again.
  - What kind of application model is used by the webapp?
+
 1. An API exists that will remove all logos. Call this API to reset things.
  - Search the code on github for an API call you saw when you used `inspect` earlier.  Once you find the file with that code browse around and see if there is another API that will reset things.
  - Use `curl` and the appropriate HTTP verb to call that API and reset your webapp
@@ -99,16 +106,18 @@ Now that you have the application running we want to enable continuous integrati
 1. Install Jenkins.  The Jenkins container in the Docker hub does not include Docker CLI which we need for management so we will extend the official one.
  - The repo includes a `reference/Dockerfile` which will provide the extra functionality needed.  View the file and see what extra steps are taken.
  - Build an image from it; use an image name like `hack/jenkins` to avoid confusion with the official image
+
 1. Create a 10GB persistent storage volume for Jenkins, for example named `vol-jenkins`.
 1. Run the container.  The Jenkins container will use its Docker CLI but manage the Docker engine on the container host.  For this to happen we pass through the management socket from the Docker host into the Jenkins container.  
  - Start Jenkins:
- ```
- docker run -d --name jenkins -p 8080:8080 -p 50000:50000 \
- -v vol-jenkins:/var/jenkins_home \
- -v /var/run/docker.sock:/var/run/docker.sock \
- -e DOCKER_HOST_IP=`ip -4 addr show ens160 | \
- grep -Po 'inet \K[\d.]+'` hack/jenkins
- ```
+     ```
+     docker run -d --name jenkins -p 8080:8080 -p 50000:50000 \
+     -v vol-jenkins:/var/jenkins_home \
+     -v /var/run/docker.sock:/var/run/docker.sock \
+     -e DOCKER_HOST_IP=`ip -4 addr show ens160 | \
+     grep -Po 'inet \K[\d.]+'` hack/jenkins
+     ```
+
 1. Load the web interface and after logging in choose **Select Plugins to Install**.  Select None and continue.  Update the `admin` user with the password `hack@thepub` and fill in your own name and email address.  It should complete the initial setup and then show you the main dashboard.
 1. Add the following plugins by navigating **Manage Jenkins** -> **Manage Plugins**:
  - **user build vars plugin**
@@ -116,6 +125,7 @@ Now that you have the application running we want to enable continuous integrati
  - **Pipeline**
  - **GitHub Plugin**
  - *Choose to download now and activate after restart.  Then on the install status screen check the Restart Jenkins checkbox.*
+
 1. Configure the Slack plugin: **Manage Jenkins** -> **Configure System** and fill in the **Global Slack Notifier Settings** using details provided in the pinned Slack post.  Click the **Test Connection** button and verify a test message is posted to Slack #build channel.
 
 ### [6] Configure jobs in Jenkins ###
