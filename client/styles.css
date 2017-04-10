@@ -8,7 +8,7 @@ html,body{
 .logo{
   background-color:#f3f3f3;
   position:absolute;
-  background-image: url(netapp_ch.jpg);
+  background-image: url(netapp_ch.png);
   background-repeat: no-repeat;
   background-size: cover;
 }
