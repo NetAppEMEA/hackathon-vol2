@@ -51,22 +51,24 @@ Because we are leveraging an existing NetApp lab we need to complete the install
         ```
         # docker run -it --rm netapp/solidfire-powershell:latest
 
+        powershell
         Connect-SFCluster 192.168.0.101 -Username admin -Password Netapp1!
         Get-SFPendingNode | Add-SFNode
         Get-SFDrive | Where-Object {$_.status -eq "available"} | Add-SFDrive
         Disconnect-SFCluster 192.168.0.101
+        exit
         ```
 
 1. Run a Docker container to verify your install is sane:
     - A basic one is `docker run --rm hello-world`
     - A fancy one is `docker run --rm -it egray/cmatrix`
 
-### [3] Setup nDVP ###
-Persistent storage is provided by NetApp SolidFire storage and managed using the NetApp Docker Volume Plugin (nDVP).  Install and setup the plugin, then verify you can provision, use, and deprovision storage directly from Docker.
+### [3] Setup Trident ###
+Persistent storage is provided by NetApp SolidFire storage and managed using the NetApp Trident Plugin.  Install and setup the plugin, then verify you can provision, use, and deprovision storage directly from Docker.
 
-The nDVP lives at [NetApp Github](https://github.com/NetApp/netappdvp). The documentation is a work in progress and is at times confusing or out of date.   For this reason I suggest you use the blog post [Using the NetApp Docker Volume Plugin with SolidFire storage](http://www.beginswithdata.com/2017/02/06/ndvp-usage-solidfire-san/) as a reference to install, configure, and use the nDVP with SolidFire storage.
+Trident lives at [NetApp Github](https://github.com/NetApp/trident). The documentation can be found here: https://netapp-trident.readthedocs.io/en/stable-v18.01/index.html.
 
-1. Install and configure the nDVP software on your container host.  Not sure where to start?  Check the blog just mentioned!
+1. Install and configure the Trident software on your container host.  Not sure where to start?  Check the site just mentioned!
 
 2. Create, mount, test, unmount, destroy some storage. Notes to help:
     - Use the blog post mentioned earlier for tips!
