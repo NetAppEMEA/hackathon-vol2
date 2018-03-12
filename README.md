@@ -3,14 +3,14 @@ Work in an Agile way and build a Continuous Integration / Continuous Deployment 
 
 ![Diagram of Goal](https://cloud.githubusercontent.com/assets/917241/24908516/95096c1e-1ec0-11e7-9f09-f57b787f9133.png)
 
-We will use Slack and Trello to work using a ChatOps model popular in DevOps shops.  Slack is a communications platform (chat on steroids) and Trello helps with task management which will help you keep your actions and status in check.  You will do most work on your own container host running CentOS. From that host you will install and configure the NetApp Docker Volume Plugin and provision some NetApp SolidFire storage. Then you will deploy a web application and database and test it works properly. Next you will setup Jenkins, including integration with Slack, so that you can quickly test and deploy new releases of the app that will be rolled out during the event.
+We will use Slack and Trello to work using a ChatOps model popular in DevOps shops.  Slack is a communications platform (chat on steroids) and Trello helps with task management which will help you keep your actions and status in check.  You will do most work on your own container host running CentOS. From that host you will install and configure the NetApp Trident Plugin and provision some NetApp SolidFire storage. Then you will deploy a web application and database and test it works properly. Next you will setup Jenkins, including integration with Slack, so that you can quickly test and deploy new releases of the app that will be rolled out during the event.
 
 Technologies used:
 
 - Trello and Slack for ChatOps
 - Docker as the container engine
 - Jenkins as the CI/CD engine
-- SolidFire with the NetApp Docker Volume Plugin for persistent storage
+- SolidFire with the NetApp Trident Plugin for persistent storage
 - Web application written in Node.js and Javascript
 - Redis in-memory data structure store as database
 
