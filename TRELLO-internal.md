@@ -9,12 +9,12 @@
  1. Look for a pinned post on the #general channel to find credentials and other info needed for the event.  The leader will assign each team a number giving you your own lab container host.
  1. Get on Trello.  In the pinned post is an invite link to join the hackathon-vol2 board.  Join it and find the list matching your team number.  Open the first card and check off the tasks that you have already completed and then continue with the next task to work through the event!
 
-### [2] Setup nDVP ###
-Persistent storage is provided by NetApp SolidFire storage and managed using the NetApp Docker Volume Plugin (nDVP).  Install and setup the plugin, then verify you can provision, use, and deprovision storage directly from Docker.
+### [2] Setup Trident ###
+Persistent storage is provided by NetApp SolidFire storage and managed using the NetApp Trident Plugin.  Install and setup the plugin, then verify you can provision, use, and deprovision storage directly from Docker.
 
-The nDVP lives at [NetApp Github](https://github.com/NetApp/netappdvp). The documentation is a work in progress and is at times confusing or out of date.  Also, we are using CoreOS for our container host slightly different installation steps are required.  For this reason I suggest you use the blog post [Using the NetApp Docker Volume Plugin with SolidFire storage](http://www.beginswithdata.com/2017/02/06/ndvp-usage-solidfire-san/) as a reference to install, configure, and use the nDVP with SolidFire storage.
+Trident lives at [NetApp Github](https://github.com/NetApp/trident). The documentation can ben found here: https://netapp-trident.readthedocs.io/en/stable-v18.01/index.html.
 
-1. Install and configure the nDVP software on your container host.  Attention:
+1. Install and configure Trident nDVP software on your container host.  Attention:
  - SolidFire connection details are in the Slack pinned post found on the #general channel
  - Configure the `TenantName` to be your container hostname (shortname as shown on the SSH prompt)
 
