@@ -1,4 +1,4 @@
-FROM jenkins:2.32.1-alpine
+FROM jenkins:2.32.2-alpine
 MAINTAINER Christopher Madden <madden@netapp.com>
 USER root
 RUN apk add --no-cache sudo docker
