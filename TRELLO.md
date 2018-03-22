@@ -37,15 +37,21 @@ Because we are leveraging an existing NetApp lab we need to complete the install
     # iptables -D INPUT 7
     ```
 
-1. Install Docker engine and start it
+1. Update the Yum Repo & list all docker versions available
     ```
-    [root@centos72 ~]# curl -fsSL https://get.docker.com/ | sh
+    [root@centos72 ~]# yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+    [root@centos72 ~]# yum list docker-ce --showduplicates | sort -r
+    ```
+
+1. Install Docker engine (17.12.1) and start it
+    ```
+    [root@centos72 ~]# yum install docker-ce-17.12.1.ce
     [root@centos72 ~]# systemctl start docker
     ```
 
 1. There are some steps needed to complete initialization of the SolidFire cluster. Open the Web GUI.
     - Lab credentials are username: `admin`, password: `Netapp1!`
-    - One node + drives needs to be added to the cluster using one of these techniques:
+    - One node + drives needs to be added to the cluster using one of these techniques (powershell prefered):
         - GUI: (1) Add the node using the 'Pending Nodes' hyperlink from reporting page.  (2) Add the drives using the 'Available Drives' hyperlink from the reporting page.
         - PowerShell on Docker:
         ```
@@ -56,6 +62,7 @@ Because we are leveraging an existing NetApp lab we need to complete the install
         Get-SFPendingNode | Add-SFNode
         Get-SFDrive | Where-Object {$_.status -eq "available"} | Add-SFDrive
         Disconnect-SFCluster 192.168.0.101
+        exit
         exit
         ```
 
