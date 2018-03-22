@@ -14,7 +14,7 @@ Persistent storage is provided by NetApp SolidFire storage and managed using the
 
 Trident lives at [NetApp Github](https://github.com/NetApp/trident). The documentation can ben found here: https://netapp-trident.readthedocs.io/en/stable-v18.01/index.html.
 
-1. Install and configure Trident nDVP software on your container host.  Attention:
+1. Install and configure Trident software on your container host.  Attention:
  - SolidFire connection details are in the Slack pinned post found on the #general channel
  - Configure the `TenantName` to be your container hostname (shortname as shown on the SSH prompt)
 
