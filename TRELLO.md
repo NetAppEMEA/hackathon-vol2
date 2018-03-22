@@ -49,6 +49,10 @@ Because we are leveraging an existing NetApp lab we need to complete the install
     [root@centos72 ~]# systemctl start docker
     ```
 
+1. Run a Docker container to verify your install is sane:
+    - A basic one is `docker run --rm hello-world`
+    - A fancy one is `docker run --rm -it egray/cmatrix`
+
 1. There are some steps needed to complete initialization of the SolidFire cluster. Open the Web GUI.
     - Lab credentials are username: `admin`, password: `Netapp1!`
     - One node + drives needs to be added to the cluster using one of these techniques (powershell prefered):
@@ -66,9 +70,6 @@ Because we are leveraging an existing NetApp lab we need to complete the install
         exit
         ```
 
-1. Run a Docker container to verify your install is sane:
-    - A basic one is `docker run --rm hello-world`
-    - A fancy one is `docker run --rm -it egray/cmatrix`
 
 ### [3] Setup Trident ###
 Persistent storage is provided by NetApp SolidFire storage and managed using the NetApp Trident Plugin.  Install and setup the plugin, then verify you can provision, use, and deprovision storage directly from Docker.
